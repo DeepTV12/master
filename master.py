@@ -58,11 +58,11 @@ folders = [
 ]
 
 # Function to open each bot.js in a new tmux pane
-def run_bot_in_tmux(folder, session_name):
+def run_bot_in_tmux(folder):
     try:
         print(f"Opening tmux pane for {folder}...")
         # Run bot.js in a new tmux pane
-        subprocess.run(f"tmux split-window -h 'cd {folder} && node bot.js'", shell=True)
+        subprocess.run(f"tmux split-window -v 'cd {folder} && node bot.js'", shell=True)
         time.sleep(1)
     except Exception as e:
         print(f"Error while running bot.js in {folder}: {e}")
@@ -71,10 +71,17 @@ def run_bots_in_tmux():
     # Create a new tmux session
     subprocess.run("tmux new-session -d -s bot_session", shell=True)
     time.sleep(1)
-    
+
+    # Set up the first pane
+    subprocess.run("tmux send-keys 'cd {folder} && node bot.js' C-m", shell=True)
+    time.sleep(1)
+
     # Open each bot in a new pane
     for folder in folders:
-        run_bot_in_tmux(folder, "bot_session")
+        run_bot_in_tmux(folder)
+    
+    # Switch to a vertical layout for better view of panes
+    subprocess.run("tmux select-layout even-vertical", shell=True)
     
     # Attach to the tmux session to see the output
     subprocess.run("tmux attach-session -t bot_session", shell=True)
