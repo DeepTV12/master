@@ -63,8 +63,11 @@ def run_bot(folder):
         os.chdir(folder)
         print(f"Running bot.js in {folder}...")
 
-        # Run bot.js with Node.js
-        subprocess.run(["node", "bot.js"], check=True)
+        # Run bot.js with Node.js and log output to a file
+        log_file_path = f"{folder}_output.log"
+        with open(log_file_path, "w") as log_file:
+            subprocess.run(["node", "bot.js"], check=True, stdout=log_file, stderr=log_file)
+        print(f"Completed running bot.js in {folder}")
     except FileNotFoundError:
         print(f"Folder {folder} not found. Skipping...")
     except subprocess.CalledProcessError as e:
@@ -85,6 +88,8 @@ def run_bots_simultaneously():
     # Wait for all processes to finish
     for process in processes:
         process.join()
+    
+    print("All bots have completed.")
 
 if __name__ == "__main__":
     run_bots_simultaneously()
