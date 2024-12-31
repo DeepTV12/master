@@ -68,19 +68,19 @@ def run_bot_in_tmux(folder):
         print(f"Error while running bot.js in {folder}: {e}")
 
 def run_bots_in_tmux():
-    # Create a new tmux session
+    # Create a new tmux session with a fixed window size (e.g., 80 columns, 24 rows)
     subprocess.run("tmux new-session -d -s bot_session", shell=True)
     time.sleep(1)
 
-    # Set up the first pane
-    subprocess.run("tmux send-keys 'cd {folder} && node bot.js' C-m", shell=True)
+    # Set up the first pane with the first bot.js
+    subprocess.run(f"tmux send-keys 'cd {folders[0]} && node bot.js' C-m", shell=True)
     time.sleep(1)
 
-    # Open each bot in a new pane
-    for folder in folders:
+    # Start splitting the window for the other bots
+    for folder in folders[1:]:
         run_bot_in_tmux(folder)
     
-    # Switch to a vertical layout for better view of panes
+    # Adjust the layout to evenly distribute space across all the panes
     subprocess.run("tmux select-layout even-vertical", shell=True)
     
     # Attach to the tmux session to see the output
