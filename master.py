@@ -57,31 +57,26 @@ folders = [
     "Zoo",
 ]
 
-# Function to open each bot.js in a separate tmux pane
-def run_bot_in_tmux(folder):
+# Function to open each bot.js in a new tmux pane
+def run_bot_in_tmux(folder, session_name):
     try:
-        print(f"Opening tmux window for {folder}...")
-        
-        # Start a new tmux session and create a new window for each bot
-        subprocess.run(f"tmux new-session -d -s bot_session 'cd {folder} && node bot.js'", shell=True)
-        
-        # Wait to ensure tmux has enough time to set up
+        print(f"Opening tmux pane for {folder}...")
+        # Run bot.js in a new tmux pane
+        subprocess.run(f"tmux split-window -h 'cd {folder} && node bot.js'", shell=True)
         time.sleep(1)
-        
-    except FileNotFoundError:
-        print(f"Folder {folder} not found. Skipping...")
     except Exception as e:
         print(f"Error while running bot.js in {folder}: {e}")
 
 def run_bots_in_tmux():
     # Create a new tmux session
     subprocess.run("tmux new-session -d -s bot_session", shell=True)
+    time.sleep(1)
     
-    # Iterate through each folder and open each bot in a separate tmux pane
+    # Open each bot in a new pane
     for folder in folders:
-        run_bot_in_tmux(folder)
+        run_bot_in_tmux(folder, "bot_session")
     
-    # Attach to the tmux session to see all the panes running
+    # Attach to the tmux session to see the output
     subprocess.run("tmux attach-session -t bot_session", shell=True)
 
 if __name__ == "__main__":
