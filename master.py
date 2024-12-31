@@ -1,6 +1,6 @@
 import os
 import subprocess
-from multiprocessing import Process
+import time
 
 # List of folder names containing bot.js
 folders = [
@@ -57,39 +57,32 @@ folders = [
     "Zoo",
 ]
 
-def run_bot(folder):
+# Function to open each bot.js in a separate tmux pane
+def run_bot_in_tmux(folder):
     try:
-        # Navigate to the folder
-        os.chdir(folder)
-        print(f"Running bot.js in {folder}...")
-
-        # Run bot.js with Node.js and log output to a file
-        log_file_path = f"{folder}_output.log"
-        with open(log_file_path, "w") as log_file:
-            subprocess.run(["node", "bot.js"], check=True, stdout=log_file, stderr=log_file)
-        print(f"Completed running bot.js in {folder}")
+        print(f"Opening tmux window for {folder}...")
+        
+        # Start a new tmux session and create a new window for each bot
+        subprocess.run(f"tmux new-session -d -s bot_session 'cd {folder} && node bot.js'", shell=True)
+        
+        # Wait to ensure tmux has enough time to set up
+        time.sleep(1)
+        
     except FileNotFoundError:
         print(f"Folder {folder} not found. Skipping...")
-    except subprocess.CalledProcessError as e:
+    except Exception as e:
         print(f"Error while running bot.js in {folder}: {e}")
-    finally:
-        # Navigate back to the master folder
-        os.chdir("..")
 
-def run_bots_simultaneously():
-    processes = []
+def run_bots_in_tmux():
+    # Create a new tmux session
+    subprocess.run("tmux new-session -d -s bot_session", shell=True)
     
-    # Create a process for each bot to run in parallel
+    # Iterate through each folder and open each bot in a separate tmux pane
     for folder in folders:
-        process = Process(target=run_bot, args=(folder,))
-        processes.append(process)
-        process.start()
-
-    # Wait for all processes to finish
-    for process in processes:
-        process.join()
+        run_bot_in_tmux(folder)
     
-    print("All bots have completed.")
+    # Attach to the tmux session to see all the panes running
+    subprocess.run("tmux attach-session -t bot_session", shell=True)
 
 if __name__ == "__main__":
-    run_bots_simultaneously()
+    run_bots_in_tmux()
