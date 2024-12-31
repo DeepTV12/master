@@ -1,8 +1,8 @@
 import os
 import subprocess
 
-# Define the path to your main folder (assumes it's cloned into 'master')
-main_folder_path = './master'  # Adjust this path if needed
+# Define the path to your main folder (absolute path or relative)
+main_folder_path = '.'  # Adjust to '.' if the script is inside the master folder
 
 # Function to run either bot.js or 1.js file
 def run_js_file(folder_path):
@@ -40,6 +40,10 @@ def run_js_file(folder_path):
 # Main function to execute the scripts in all subfolders
 def run_all_js_files():
     # Step 1: Get all subfolders in the main folder
+    if not os.path.exists(main_folder_path):
+        print(f"Main folder path does not exist: {main_folder_path}")
+        return
+
     subfolders = [os.path.join(main_folder_path, folder) for folder in os.listdir(main_folder_path) if os.path.isdir(os.path.join(main_folder_path, folder))]
     
     if not subfolders:
