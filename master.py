@@ -1,10 +1,10 @@
 import os
 import subprocess
 
-# Define the path to your main folder (absolute or relative)
-main_folder_path = '.'  # Adjust based on where the script is located
+# Define the path to your main folder
+main_folder_path = './master'  # Adjust based on your cloned GitHub repository structure
 
-# Function to run either bot.js or 1.js file
+# Function to run the JS file (bot.js or 1.js) in a folder
 def run_js_file(folder_path):
     try:
         # Navigate into the folder
@@ -19,20 +19,17 @@ def run_js_file(folder_path):
             print(f"No bot.js or 1.js found in {folder_path}. Skipping...")
             return
 
-        # Run the JavaScript file using Node.js with a timeout
+        # Run the command as it would be in Termux
         print(f"Running {js_file} in {folder_path}...")
-        process = subprocess.Popen(['node', js_file], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        command = f"node {js_file}"
+        process = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 
-        # Wait for the process to complete or timeout after 10 seconds
-        try:
-            stdout, stderr = process.communicate(timeout=10)  # Timeout in seconds
-            if process.returncode == 0:
-                print(f"Success: {folder_path}/{js_file} - {stdout.decode()}")
-            else:
-                print(f"Error in {folder_path}/{js_file} - {stderr.decode()}")
-        except subprocess.TimeoutExpired:
-            process.kill()
-            print(f"Timeout: {folder_path}/{js_file} took too long to execute and was terminated.")
+        # Capture output and errors
+        stdout, stderr = process.communicate()
+        if process.returncode == 0:
+            print(f"Success: {folder_path}/{js_file} - {stdout.decode()}")
+        else:
+            print(f"Error in {folder_path}/{js_file} - {stderr.decode()}")
 
     except Exception as e:
         print(f"Failed to execute script in {folder_path}: {str(e)}")
