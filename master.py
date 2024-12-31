@@ -1,5 +1,6 @@
 import os
 import subprocess
+from multiprocessing import Process
 
 # List of folder names containing bot.js
 folders = [
@@ -56,24 +57,34 @@ folders = [
     "Zoo",
 ]
 
-def run_bots():
+def run_bot(folder):
+    try:
+        # Navigate to the folder
+        os.chdir(folder)
+        print(f"Running bot.js in {folder}...")
+
+        # Run bot.js with Node.js
+        subprocess.run(["node", "bot.js"], check=True)
+    except FileNotFoundError:
+        print(f"Folder {folder} not found. Skipping...")
+    except subprocess.CalledProcessError as e:
+        print(f"Error while running bot.js in {folder}: {e}")
+    finally:
+        # Navigate back to the master folder
+        os.chdir("..")
+
+def run_bots_simultaneously():
+    processes = []
+    
+    # Create a process for each bot to run in parallel
     for folder in folders:
-        print(f"Processing folder: {folder}")
-        
-        try:
-            # Navigate to the folder
-            os.chdir(folder)
-            print(f"Running bot.js in {folder}...")
-            
-            # Run bot.js with Node.js
-            subprocess.run(["node", "bot.js"], check=True)
-        except FileNotFoundError:
-            print(f"Folder {folder} not found. Skipping...")
-        except subprocess.CalledProcessError as e:
-            print(f"Error while running bot.js in {folder}: {e}")
-        finally:
-            # Navigate back to the master folder
-            os.chdir("..")
+        process = Process(target=run_bot, args=(folder,))
+        processes.append(process)
+        process.start()
+
+    # Wait for all processes to finish
+    for process in processes:
+        process.join()
 
 if __name__ == "__main__":
-    run_bots()
+    run_bots_simultaneously()
