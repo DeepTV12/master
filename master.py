@@ -15,8 +15,9 @@ folders = [
 def run_bot_in_tmux(folder):
     try:
         print(f"Opening tmux pane for {folder}...")
-        # Run bot.js in a new tmux pane
-        subprocess.run(f"tmux split-window -v 'cd {folder} && node bot.js'", shell=True)
+        # Ensure that each bot.js file is opened correctly in a new tmux pane
+        command = f"tmux split-window -v 'cd {folder} && node bot.js'"
+        subprocess.run(command, shell=True, check=True)
         time.sleep(1)
     except Exception as e:
         print(f"Error while running bot.js in {folder}: {e}")
