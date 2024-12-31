@@ -1,0 +1,15 @@
+{
+  "timeZone": "en-US",
+  "skipInvalidProxy": false,
+  "delayEachAccount": [5, 8],
+  "timeToRestartAllAccounts": 300,
+  "howManyAccountsRunInOneTime": 100,
+  "isBetting": true,
+  "isDoTasks": true,
+  "isPlayGames": true,
+  "referralCode": "6713068747",
+  "isUpgradeBoost": true,
+  "howManyMultitapUpgradeYouWant": 20,
+  "howManyTapPoolUpgradeYouWant": 20,
+  "howManyBetSizeUgradeYouWant": 20
+}

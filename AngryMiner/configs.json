@@ -1,0 +1,11 @@
+{
+  "timeZone": "en-US",
+  "timeToRestartAllAccounts": 300,
+  "howManyAccountsRunInOneTime": 100,
+  "isDoTasks": true,
+  "isPlayGames": true,
+  "howManyAGM_percentWantToSwap": 0,
+  "referralCode": "6713068747",
+  "skipInvalidProxy": false,
+  "delayEachAccount": [1, 81]
+}
