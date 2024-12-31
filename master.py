@@ -2,7 +2,7 @@ import os
 import subprocess
 
 # Define the path to your main folder
-main_folder_path = './master'  # Adjust based on your cloned GitHub repository structure
+main_folder_path = './'  # Adjust based on your cloned GitHub repository structure
 
 # Function to run the JS file (bot.js or 1.js) in a folder
 def run_js_file(folder_path):
