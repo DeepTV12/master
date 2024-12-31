@@ -1,60 +1,97 @@
-import os
 import subprocess
+import os
 
-# Define the path to your main folder
-main_folder_path = './'  # Adjust based on your cloned GitHub repository structure
+# List of paths to bot.js files
+bot_js_paths = [
+    "C:\\Users\\cf\\Desktop\\Airdrops\\AckiNacki\\bot.js",
+    "C:\\Users\\cf\\Desktop\\Airdrops\\Agent301\\bot.js",
+    "C:\\Users\\cf\\Desktop\\Airdrops\\AngryMiner\\bot.js",
+    "C:\\Users\\cf\\Desktop\\Airdrops\\Animix\\bot.js",
+    "C:\\Users\\cf\\Desktop\\Airdrops\\AVACOIN\\bot.js",
+    "C:\\Users\\cf\\Desktop\\Airdrops\\AvaEthernity\\bot.js",
+    "C:\\Users\\cf\\Desktop\\Airdrops\\BettorWhale\\bot.js",
+    "C:\\Users\\cf\\Desktop\\Airdrops\\BirdsSui\\bot.js",
+    "C:\\Users\\cf\\Desktop\\Airdrops\\Bitminer\\bot.js",
+    "C:\\Users\\cf\\Desktop\\Airdrops\\Bits\\bot.js",
+    "C:\\Users\\cf\\Desktop\\Airdrops\\Bums\\bot.js",
+    "C:\\Users\\cf\\Desktop\\Airdrops\\BunnyBlizt\\bot.js",
+    "C:\\Users\\cf\\Desktop\\Airdrops\\BybitCoinsweeper\\bot.js",
+    "C:\\Users\\cf\\Desktop\\Airdrops\\BybitSpaceS\\bot.js",
+    "C:\\Users\\cf\\Desktop\\Airdrops\\CellWallet\\bot.js",
+    "C:\\Users\\cf\\Desktop\\Airdrops\\CoinRateCap\\bot.js",
+    "C:\\Users\\cf\\Desktop\\Airdrops\\Dormint\\bot.js",
+    "C:\\Users\\cf\\Desktop\\Airdrops\\DotCoin\\bot.js",
+    "C:\\Users\\cf\\Desktop\\Airdrops\\Fintopio\\bot.js",
+    "C:\\Users\\cf\\Desktop\\Airdrops\\FireCoin\\bot.js",
+    "C:\\Users\\cf\\Desktop\\Airdrops\\FlareX\\bot.js",
+    "C:\\Users\\cf\\Desktop\\Airdrops\\Gameness\\bot.js",
+    "C:\\Users\\cf\\Desktop\\Airdrops\\GenkiMiner\\bot.js",
+    "C:\\Users\\cf\\Desktop\\Airdrops\\Hamsterdam\\bot.js",
+    "C:\\Users\\cf\\Desktop\\Airdrops\\HamsterKombat\\bot.js",
+    "C:\\Users\\cf\\Desktop\\Airdrops\\HiPinPinAI\\bot.js",
+    "C:\\Users\\cf\\Desktop\\Airdrops\\IAMDOG\\bot.js",
+    "C:\\Users\\cf\\Desktop\\Airdrops\\Interstella\\bot.js",
+    "C:\\Users\\cf\\Desktop\\Airdrops\\KoniStory\\bot.js",
+    "C:\\Users\\cf\\Desktop\\Airdrops\\MoonHub\\bot.js",
+    "C:\\Users\\cf\\Desktop\\Airdrops\\NEUTON\\bot.js",
+    "C:\\Users\\cf\\Desktop\\Airdrops\\Nomis\\bot.js",
+    "C:\\Users\\cf\\Desktop\\Airdrops\\PandaScratch\\bot.js",
+    "C:\\Users\\cf\\Desktop\\Airdrops\\PellGEM\\bot.js",
+    "C:\\Users\\cf\\Desktop\\Airdrops\\PinEye\\bot.js",
+    "C:\\Users\\cf\\Desktop\\Airdrops\\Pixie\\bot.js",
+    "C:\\Users\\cf\\Desktop\\Airdrops\\PocketFI\\bot.js",
+    "C:\\Users\\cf\\Desktop\\Airdrops\\PocketRocket\\bot.js",
+    "C:\\Users\\cf\\Desktop\\Airdrops\\PocketWaifu\\bot.js",
+    "C:\\Users\\cf\\Desktop\\Airdrops\\RedPocket\\bot.js",
+    "C:\\Users\\cf\\Desktop\\Airdrops\\ReputationBuilder\\bot.js",
+    "C:\\Users\\cf\\Desktop\\Airdrops\\Roolz\\bot.js",
+    "C:\\Users\\cf\\Desktop\\Airdrops\\TonFREE\\bot.js",
+    "C:\\Users\\cf\\Desktop\\Airdrops\\TONxDAO\\bot.js",
+    "C:\\Users\\cf\\Desktop\\Airdrops\\UnitsWallet\\bot.js",
+    "C:\\Users\\cf\\Desktop\\Airdrops\\WhiteYescoin\\bot.js",
+    "C:\\Users\\cf\\Desktop\\Airdrops\\WonTon\\bot.js",
+    "C:\\Users\\cf\\Desktop\\Airdrops\\XPINPLANET\\bot.js",
+    "C:\\Users\\cf\\Desktop\\Airdrops\\XPointMaker\\bot.js",
+    "C:\\Users\\cf\\Desktop\\Airdrops\\YesCoin\\bot.js",
+    "C:\\Users\\cf\\Desktop\\Airdrops\\Zoo\\bot.js",
+]
 
-# Function to run the JS file (bot.js or 1.js) in a folder
-def run_js_file(folder_path):
-    try:
-        # Navigate into the folder
-        os.chdir(folder_path)
+def run_bots():
+    processes = []
 
-        # Check if bot.js or 1.js exists in the folder
-        if os.path.exists('bot.js'):
-            js_file = 'bot.js'
-        elif os.path.exists('1.js'):
-            js_file = '1.js'
-        else:
-            print(f"No bot.js or 1.js found in {folder_path}. Skipping...")
-            return
+    for bot_path in bot_js_paths:
+        if not os.path.exists(bot_path):
+            print(f"File not found: {bot_path}. Skipping...")
+            continue
 
-        # Run the command as it would be in Termux
-        print(f"Running {js_file} in {folder_path}...")
-        command = f"node {js_file}"
-        process = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        # Get the folder path
+        folder_path = os.path.dirname(bot_path)
+        print(f"Processing folder: {folder_path}")
 
-        # Capture output and errors
-        stdout, stderr = process.communicate()
-        if process.returncode == 0:
-            print(f"Success: {folder_path}/{js_file} - {stdout.decode()}")
-        else:
-            print(f"Error in {folder_path}/{js_file} - {stderr.decode()}")
+        try:
+            # Run the bot.js file using `node`
+            process = subprocess.Popen(
+                ['node', bot_path],
+                cwd=folder_path,
+                stdout=subprocess.PIPE,
+                stderr=subprocess.PIPE,
+                text=True
+            )
+            processes.append((process, folder_path))
+            print(f"Running bot.js in {folder_path}...")
+        except Exception as e:
+            print(f"Failed to run bot.js in {folder_path}: {e}")
 
-    except Exception as e:
-        print(f"Failed to execute script in {folder_path}: {str(e)}")
-
-    finally:
-        # Navigate back to the main folder
-        os.chdir('..')
-
-# Main function to execute the scripts in all subfolders
-def run_all_js_files():
-    # Step 1: Get all subfolders in the main folder
-    if not os.path.exists(main_folder_path):
-        print(f"Main folder path does not exist: {main_folder_path}")
-        return
-
-    subfolders = [os.path.join(main_folder_path, folder) for folder in os.listdir(main_folder_path) if os.path.isdir(os.path.join(main_folder_path, folder))]
-
-    if not subfolders:
-        print("No subfolders found in the main folder.")
-        return
-
-    # Step 2: Run either bot.js or 1.js in each subfolder
-    for subfolder in subfolders:
-        print(f"Processing folder: {subfolder}")
-        run_js_file(subfolder)
+    # Monitor all processes
+    for process, folder in processes:
+        try:
+            stdout, stderr = process.communicate(timeout=60)
+            print(f"Output from {folder}:\n{stdout}")
+            if stderr:
+                print(f"Errors from {folder}:\n{stderr}")
+        except subprocess.TimeoutExpired:
+            print(f"Timeout: {folder}/bot.js took too long to execute and was terminated.")
+            process.kill()
 
 if __name__ == '__main__':
-    run_all_js_files()
+    run_bots()
