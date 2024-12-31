@@ -22,7 +22,7 @@ def run_bot_in_tmux(folder):
         print(f"Error while running bot.js in {folder}: {e}")
 
 def run_bots_in_tmux():
-    # Create a new tmux session with a fixed window size (e.g., 80 columns, 24 rows)
+    # Create a new tmux session
     subprocess.run("tmux new-session -d -s bot_session", shell=True)
     time.sleep(1)
 
@@ -30,22 +30,22 @@ def run_bots_in_tmux():
     subprocess.run(f"tmux send-keys 'cd {folders[0]} && node bot.js' C-m", shell=True)
     time.sleep(1)
 
-    # Grouping bots into manageable chunks (e.g., 5 bots per window)
-    batch_size = 5
+    # Group bots into smaller batches to fit into tmux panes
+    batch_size = 3  # Adjust this number based on the space you want to allocate per window
     for i in range(1, len(folders), batch_size):
         batch = folders[i:i+batch_size]
 
-        # For each batch, create a new tmux window
+        # Create a new tmux window for each batch
         subprocess.run("tmux new-window", shell=True)
         time.sleep(1)
 
         # Open each bot.js in the new window
         for folder in batch:
             run_bot_in_tmux(folder)
-        
+
         # Adjust the layout of the tmux window (vertical split for each bot)
         subprocess.run("tmux select-layout even-vertical", shell=True)
-    
+
     # Finally, attach to the tmux session to see the running processes
     subprocess.run("tmux attach-session -t bot_session", shell=True)
 
