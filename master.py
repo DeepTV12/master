@@ -30,7 +30,7 @@ def main():
         for folder in folders:
             run_bot(folder)
             print("Waiting 3 minutes before starting the next bot...")
-            time.sleep(180)  # Wait for 3 minutes before starting the next bot
+            time.sleep(10)  # Wait for 3 minutes before starting the next bot
 
 if __name__ == "__main__":
     folders = [
