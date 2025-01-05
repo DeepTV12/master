@@ -6,8 +6,8 @@ from multiprocessing import Pool, cpu_count
 folders = [
     "AckiNacki", "Agent301", "AngryMiner", "Animix", "AVACOIN", "AvaEthernity", "BettorWhale", "BirdsSui", "Bitminer", "Bits", "Bums", "BunnyBlizt", 
     "BybitCoinsweeper", "BybitSpaceS", "CellWallet", "CoinRateCap", "Dormint", "DotCoin", "Fintopio", "FireCoin", "FlareX", "Gameness", "GenkiMiner", 
-    "Hamsterdam", "HamsterKombat", "HiPinPinAI", "IAMDOG", "Interstella", "KoniStory", "MoonHub", "NEUTON", "Nomis", "PandaScratch", "PellGEM", 
-    "PinEye", "Pixie", "PocketFI", "PocketRocket", "PocketWaifu", "RedPocket", "ReputationBuilder", "Roolz", "TonFREE", "TONxDAO", "UnitsWallet", 
+    "Hamsterdam", "HamsterKombat", "HiPinPinAI", "Interstella", "KoniStory", "MoonHub", "NEUTON", "Nomis", "PandaScratch", "PellGEM", 
+    "PinEye", "Pixie", "PocketFI", "PocketRocket", "RedPocket", "Roolz", "TonFREE", "TONxDAO", "UnitsWallet", 
     "WhiteYescoin", "WonTon", "XPINPLANET", "XPointMaker", "YesCoin", "Zoo"
 ]
 
