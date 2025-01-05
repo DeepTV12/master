@@ -15,7 +15,7 @@ def run_bot(folder):
         else:
             print(f"No bot.js or 1.js found in {folder}")
         
-        time.sleep(10)  # Wait for 3 minutes
+        time.sleep(100)  # Wait for 3 minutes
         
         if process:
             process.terminate()  # Terminate the process after 3 minutes
@@ -30,7 +30,7 @@ def main():
         for folder in folders:
             run_bot(folder)
             print("Waiting 3 minutes before starting the next bot...")
-            time.sleep(10)  # Wait for 3 minutes before starting the next bot
+            time.sleep(3)  # Wait for 3 seconds before starting the next bot
 
 if __name__ == "__main__":
     folders = [
