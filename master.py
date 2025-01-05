@@ -8,7 +8,7 @@ folders = [
     "BybitCoinsweeper", "BybitSpaceS", "CellWallet", "CoinRateCap", "Dormint", "DotCoin", "Fintopio", "FireCoin", "FlareX", "Gameness", "GenkiMiner", 
     "Hamsterdam", "HamsterKombat", "HiPinPinAI", "Interstella", "KoniStory", "MoonHub", "NEUTON", "Nomis", "PandaScratch", "PellGEM", 
     "PinEye", "Pixie", "PocketFI", "PocketRocket", "RedPocket", "Roolz", "TonFREE", "TONxDAO", "UnitsWallet", 
-    "WhiteYescoin", "WonTon", "XPINPLANET", "XPointMaker", "YesCoin", "Zoo"
+    "WhiteYescoin", "WonTon", "XPINPLANET", "YesCoin", "Zoo"
 ]
 
 # Function to run a bot.js or 1.js script in a folder
