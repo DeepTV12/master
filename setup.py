@@ -47,39 +47,54 @@ bots = {
     "Zoo": "queryid",
 }
 
-# Function to prompt the user for input and save to datas.txt
-def setup_bot(bot_name, bot_type):
-    folder = bot_name  # Assuming folder names match bot names exactly
+# Function to update or append the correct value inside datas.txt
+def update_datas_file(bot_name, bot_type, user_input):
+    folder = bot_name  # Folder name is the bot name
     data_file = os.path.join(folder, "datas.txt")
 
-    # Create the folder if it doesn't exist
-    if not os.path.exists(folder):
-        os.makedirs(folder)
-
-    try:
-        # Ask the user for the required input (queryid or token)
-        user_input = input(f"Please enter {bot_type} for {bot_name}: ").strip()
-
-        # Skip empty inputs
-        if not user_input:
-            print(f"⚠️ Skipping {bot_name} (empty input).")
-            return
-
-        # Append the input to datas.txt
-        with open(data_file, "a") as f:
+    # If datas.txt does not exist, create it
+    if not os.path.exists(data_file):
+        with open(data_file, "w") as f:
             f.write(f"{bot_type}: {user_input}\n")
+        print(f"✅ Created {data_file} and saved {bot_type}.")
+        return
 
-        print(f"✅ Saved {bot_type} for {bot_name} in {data_file}")
+    # Read current contents
+    updated_lines = []
+    found = False
 
-    except KeyboardInterrupt:
-        print("\n⏹️  Setup interrupted. Exiting safely... ✅")
-        exit(0)  # Exit cleanly on Ctrl + C
+    with open(data_file, "r") as f:
+        lines = f.readlines()
+
+    # Update existing value if found
+    for line in lines:
+        if line.startswith(f"{bot_type}:"):
+            updated_lines.append(f"{bot_type}: {user_input}\n")
+            found = True
+        else:
+            updated_lines.append(line)
+
+    # If the entry was not found, append it
+    if not found:
+        updated_lines.append(f"{bot_type}: {user_input}\n")
+
+    # Write updated content back to file
+    with open(data_file, "w") as f:
+        f.writelines(updated_lines)
+
+    print(f"✅ Updated {bot_type} for {bot_name} in {data_file}")
 
 # Main loop
 if __name__ == "__main__":
     try:
         for bot, bot_type in bots.items():
-            setup_bot(bot, bot_type)
+            user_input = input(f"Please enter {bot_type} for {bot}: ").strip()
+
+            if not user_input:
+                print(f"⚠️ Skipping {bot} (empty input).")
+                continue
+
+            update_datas_file(bot, bot_type, user_input)
 
         print("\n✅ All bots have been configured successfully!")
     except KeyboardInterrupt:
