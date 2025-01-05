@@ -47,16 +47,37 @@ bots = {
     "Zoo": "queryid",
 }
 
+# Function to check if datas.txt is writable
+def check_file_permissions(file_path):
+    if not os.access(file_path, os.W_OK):
+        print(f"⚠️ WARNING: No write permission for {file_path}")
+        print("🔧 Fixing permissions...")
+        os.system(f"chmod +w '{file_path}'")  # Give write access
+        if not os.access(file_path, os.W_OK):
+            print(f"❌ ERROR: Still can't write to {file_path}. Check file permissions manually!")
+            return False
+    return True
+
 # Function to update or append the correct value inside datas.txt
 def update_datas_file(bot_name, bot_type, user_input):
     folder = bot_name  # Folder name is the bot name
     data_file = os.path.join(folder, "datas.txt")
 
-    # If datas.txt does not exist, create it
+    # Check if the folder exists
+    if not os.path.exists(folder):
+        print(f"❌ ERROR: Folder '{folder}' does not exist!")
+        return
+
+    # Check if datas.txt exists
     if not os.path.exists(data_file):
+        print(f"⚠️ {data_file} not found. Creating new one...")
         with open(data_file, "w") as f:
             f.write(f"{bot_type}: {user_input}\n")
         print(f"✅ Created {data_file} and saved {bot_type}.")
+        return
+
+    # Check if the file is writable
+    if not check_file_permissions(data_file):
         return
 
     # Read current contents
@@ -65,6 +86,12 @@ def update_datas_file(bot_name, bot_type, user_input):
 
     with open(data_file, "r") as f:
         lines = f.readlines()
+
+    # DEBUG: Print existing content
+    print(f"🔍 Checking {data_file}... (before update)")
+    print("------")
+    print("".join(lines) if lines else "Empty file")
+    print("------")
 
     # Update existing value if found
     for line in lines:
@@ -81,6 +108,13 @@ def update_datas_file(bot_name, bot_type, user_input):
     # Write updated content back to file
     with open(data_file, "w") as f:
         f.writelines(updated_lines)
+
+    # DEBUG: Print updated content
+    print(f"🔍 Checking {data_file}... (after update)")
+    print("------")
+    with open(data_file, "r") as f:
+        print(f.read())
+    print("------")
 
     print(f"✅ Updated {bot_type} for {bot_name} in {data_file}")
 
