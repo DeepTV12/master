@@ -56,18 +56,31 @@ def setup_bot(bot_name, bot_type):
     if not os.path.exists(folder):
         os.makedirs(folder)
 
-    # Ask the user for the required input (queryid or token)
-    user_input = input(f"Please enter {bot_type} for {bot_name}: ")
+    try:
+        # Ask the user for the required input (queryid or token)
+        user_input = input(f"Please enter {bot_type} for {bot_name}: ").strip()
 
-    # Use Termux-compatible command to append input to datas.txt
-    command = f'echo "{bot_type}: {user_input}" >> "{data_file}"'
-    os.system(command)
+        # Skip empty inputs
+        if not user_input:
+            print(f"⚠️ Skipping {bot_name} (empty input).")
+            return
 
-    print(f"Saved {bot_type} for {bot_name} in {data_file} ✅")
+        # Append the input to datas.txt
+        with open(data_file, "a") as f:
+            f.write(f"{bot_type}: {user_input}\n")
+
+        print(f"✅ Saved {bot_type} for {bot_name} in {data_file}")
+
+    except KeyboardInterrupt:
+        print("\n⏹️  Setup interrupted. Exiting safely... ✅")
+        exit(0)  # Exit cleanly on Ctrl + C
 
 # Main loop
 if __name__ == "__main__":
-    for bot, bot_type in bots.items():
-        setup_bot(bot, bot_type)
+    try:
+        for bot, bot_type in bots.items():
+            setup_bot(bot, bot_type)
 
-    print("\n✅ All bots have been configured successfully!")
+        print("\n✅ All bots have been configured successfully!")
+    except KeyboardInterrupt:
+        print("\n⏹️  Setup interrupted. Exiting safely... ✅")
