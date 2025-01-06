@@ -1,51 +1,50 @@
 import os
 import sys
 
-MASTER_DIR = os.path.dirname(os.path.abspath(__file__))  # Get the master repo directory
+MASTER_DIR = os.path.dirname(os.path.abspath(__file__))  # Master repo directory
 
-def get_bot_folders():
-    """Returns a list of bot folder names inside the master repository."""
-    return [folder for folder in os.listdir(MASTER_DIR) if os.path.isdir(os.path.join(MASTER_DIR, folder))]
+# Dictionary containing bot names and their respective token type (queryid/auth token)
+BOT_TOKENS = {
+    "Avacoin": "queryid",
+    "AckiNack": "token",
+    "SomeOtherBot": "queryid",  # Add other bots as needed
+}
 
 def update_datas_txt(bot_folder, key, value):
-    """Updates datas.txt inside a specific bot folder."""
+    """Appends a new entry to datas.txt inside a bot folder."""
     file_path = os.path.join(MASTER_DIR, bot_folder, 'datas.txt')
 
-    # Read existing lines if the file exists
-    existing_lines = []
+    # Ensure the bot folder exists
+    if not os.path.exists(os.path.join(MASTER_DIR, bot_folder)):
+        print(f"❌ Bot folder {bot_folder} not found! Skipping...")
+        return
+
+    # Read the existing content (if any)
+    existing_content = ""
     if os.path.exists(file_path):
         with open(file_path, 'r') as f:
-            existing_lines = f.readlines()
+            existing_content = f.read().strip()
 
-    # Update or add new entry
-    updated_lines = []
-    found = False
-    for line in existing_lines:
-        if line.startswith(f"{key}:"):
-            updated_lines.append(f"{key}: {value}\n")
-            found = True
-        else:
-            updated_lines.append(line)
-    
-    if not found:
-        updated_lines.append(f"{key}: {value}\n")
+    # Prepare new content
+    new_entry = f"{key}: {value}\n"
+    if existing_content:
+        new_content = existing_content + "\n" + new_entry  # Append to existing content
+    else:
+        new_content = new_entry  # If empty, just add the new entry
 
-    # Write back to datas.txt
+    # Write the updated content back to the file
     with open(file_path, 'w') as f:
-        f.writelines(updated_lines)
+        f.write(new_content)
 
     print(f"✅ Updated {key} for {bot_folder} in {file_path}")
 
 def main():
-    bot_folders = get_bot_folders()
-
-    for bot in bot_folders:
+    for bot, token_type in BOT_TOKENS.items():
         print(f"🔍 Checking {bot}/datas.txt...")
 
-        key = input(f"Enter key for {bot} (e.g., queryid or token): ").strip()
-        value = input(f"Enter value for {key} in {bot}: ").strip()
+        value = input(f"Enter {token_type} for {bot}: ").strip()
 
-        update_datas_txt(bot, key, value)
+        update_datas_txt(bot, token_type, value)
 
 if __name__ == "__main__":
     try:
