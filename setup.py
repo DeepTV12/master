@@ -55,7 +55,7 @@ BOTS = {
     "Zoo": "queryid"
 }
 
-def update_datas_txt(bot_folder, key, value):
+def update_datas_txt(bot_folder, value):
     """Updates the datas.txt file in the bot folder."""
     file_path = os.path.join(MASTER_DIR, bot_folder, 'datas.txt')
 
@@ -71,7 +71,7 @@ def update_datas_txt(bot_folder, key, value):
             existing_content = f.read().strip()
 
     # Prepare new content
-    new_entry = f"{key}: {value}\n"
+    new_entry = f"{value}\n"
     if existing_content:
         new_content = existing_content + "\n" + new_entry  # Append if content exists
     else:
@@ -81,15 +81,15 @@ def update_datas_txt(bot_folder, key, value):
     with open(file_path, 'w') as f:
         f.write(new_content)
 
-    print(f"✅ Updated {key} for {bot_folder}")
+    print(f"✅ Updated {bot_folder}")
 
 def main():
-    for bot_folder, token_type in BOTS.items():
+    for bot_folder in BOTS.keys():
         print(f"🔍 Checking {bot_folder}/datas.txt...")
 
-        value = input(f"Enter {token_type} for {bot_folder}: ").strip()
+        value = input(f"Enter value for {bot_folder}: ").strip()
 
-        update_datas_txt(bot_folder, token_type, value)
+        update_datas_txt(bot_folder, value)
 
 if __name__ == "__main__":
     try:
