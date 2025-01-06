@@ -1,10 +1,10 @@
 {
   "timeZone": "en-US",
   "isSkipInvalidProxy": false,
-  "delayEachAccount": [5, 8],
+  "delayEachAccount": [1, 2],
   "timeToRestartAllAccounts": 300,
   "howManyAccountsRunInOneTime": 100,
-  "isDoTasks": false,
+  "isDoTasks": true,
   "isPlayGames": true,
   "referralCode": "",
   "amountOfPickAxeUpgrade": 5,

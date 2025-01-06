@@ -2,7 +2,7 @@
   "limit": 100,
   "countdown": 300,
   "country_time": "en-US",
-  "collectCoinsForever": false,
+  "collectCoinsForever": true,
   "referralCode": "p8kr9hH",
-  "delayEachAccount": [5, 8]
+  "delayEachAccount": [1, 2]
 }

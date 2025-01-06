@@ -1,7 +1,7 @@
 {
   "timeZone": "en-US",
   "skipInvalidProxy": false,
-  "delayEachAccount": [5, 8],
+  "delayEachAccount": [1, 2],
   "timeToRestartAllAccounts": 300,
   "howManyAccountsRunInOneTime": 100,
   "isBetting": true,

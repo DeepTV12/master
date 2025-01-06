@@ -3,5 +3,5 @@
   "upgrade": true,
   "maxPrice": 5000,
   "countdown": 300,
-  "delayEachAccount": [1, 81]
+  "delayEachAccount": [1, 2]
 }

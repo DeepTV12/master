@@ -4,5 +4,5 @@
   "country_time": "en-US",
   "rewards": 5000,
   "howManyGames": 100,
-  "delayEachAccount": [1, 81]
+  "delayEachAccount": [1, 2]
 }

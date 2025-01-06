@@ -3,6 +3,6 @@
   "countdown": 300,
   "country_time": "en-US",
   "maxPrice": 100000000,
-  "delayEachAccount": [1, 81],
+  "delayEachAccount": [1, 2],
   "referralCode": "0x171D49df5720fb3Ed450c4772af9B78805DCBFEE"
 }

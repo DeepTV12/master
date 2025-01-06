@@ -3,7 +3,7 @@
   "countdown": 300,
   "country_time": "en-US",
   "isBugging": false,
-  "delayEachAccount": [5, 8],
+  "delayEachAccount": [1, 2],
   "skipInvalidProxy": false,
   "howManyGames": 100
 }

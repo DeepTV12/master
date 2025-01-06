@@ -3,5 +3,5 @@
   "countdown": 30,
   "country_time": "en-US",
   "howManyLevelsUpgrade": 1,
-  "delayEachAccount": [5, 8]
+  "delayEachAccount": [1, 2]
 }

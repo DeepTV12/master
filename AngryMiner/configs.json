@@ -4,8 +4,8 @@
   "howManyAccountsRunInOneTime": 100,
   "isDoTasks": true,
   "isPlayGames": true,
-  "howManyAGM_percentWantToSwap": 0,
+  "howManyAGM_percentWantToSwap": 50,
   "referralCode": "6713068747",
   "skipInvalidProxy": false,
-  "delayEachAccount": [1, 81]
+  "delayEachAccount": [1, 2]
 }

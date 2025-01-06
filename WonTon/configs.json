@@ -3,7 +3,7 @@
   "countdown": 300,
   "country_time": "en-US",
   "isSkipInvalidProxy": true,
-  "delayEachAccount": [1, 81],
+  "delayEachAccount": [1, 2],
   "referralCode": "UHX9CQK0",
   "minPriceToSellTon": 0,
    "doTasks": true

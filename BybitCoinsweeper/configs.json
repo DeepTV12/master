@@ -1,10 +1,10 @@
 {
   "limit": 100,
-  "countdown": 3000,
+  "countdown": 300,
   "country_time": "en-US",
   "howManyGames": 1000,
   "winRate": 1,
   "isSkipInvalidProxy": false,
-  "delayEachAccount": [5, 8],
+  "delayEachAccount": [1, 2],
   "referralCode": "6713068747"
 }

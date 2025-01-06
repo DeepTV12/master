@@ -8,5 +8,5 @@
   "country_time": "en-US",
   "limit": 1000,
   "doTasks": true,
-  "delayEachAccount": [1, 81]
+  "delayEachAccount": [1, 2]
 }

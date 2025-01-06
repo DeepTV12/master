@@ -2,6 +2,6 @@
   "limit": 100,
   "countdown": 300,
   "country_time": "en-US",
-  "delayEachAccount": [1, 81],
+  "delayEachAccount": [1, 2],
   "referralCode": "6wPG3o5QRA_1_1"
 }

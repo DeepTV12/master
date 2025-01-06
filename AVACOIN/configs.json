@@ -3,7 +3,7 @@
   "rotateProxy": false,
   "skipInvalidProxy": false,
   "proxyRotationInterval": 2,
-  "delayEachAccount": [3, 12],
+  "delayEachAccount": [1, 2],
   "timeToRestartAllAccounts": 300,
   "howManyAccountsRunInOneTime": 10,
   "doTasks": true,
