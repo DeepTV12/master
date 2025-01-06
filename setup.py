@@ -21,7 +21,6 @@ BOTS = {
     "BybitCoinsweeper": "queryid",
     "BybitSpaceS": "queryid",
     "CellWallet": "queryid",
-    "CoinRateCap": "token",
     "Dormint": "queryid",
     "DotCoin": "queryid",
     "Fintopio": "queryid",
