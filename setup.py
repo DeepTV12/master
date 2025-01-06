@@ -1,25 +1,70 @@
 import os
 import sys
 
-MASTER_DIR = os.path.dirname(os.path.abspath(__file__))  # Master repo directory
+# Set the master repository directory
+MASTER_DIR = os.path.dirname(os.path.abspath(__file__))
 
-# Dictionary containing bot names and their respective token type (queryid/auth token)
-BOT_TOKENS = {
-    "Avacoin": "queryid",
-    "AckiNack": "token",
-    "SomeOtherBot": "queryid",  # Add other bots as needed
+# Define bot folders and their respective token types
+BOTS = {
+    "AVACOIN": "queryid",
+    "AckiNacki": "token",
+    "Agent301": "queryid",
+    "AngryMiner": "queryid",
+    "Animix": "queryid",
+    "AvaEthernity": "queryid",
+    "BettorWhale": "queryid",
+    "BirdsSui": "queryid",
+    "Bitminer": "token",
+    "Bits": "queryid",
+    "Bums": "queryid",
+    "BunnyBlizt": "queryid",
+    "BybitCoinsweeper": "queryid",
+    "BybitSpaceS": "queryid",
+    "CellWallet": "queryid",
+    "CoinRateCap": "token",
+    "Dormint": "queryid",
+    "DotCoin": "queryid",
+    "Fintopio": "queryid",
+    "FireCoin": "queryid",
+    "FlareX": "queryid",
+    "Gameness": "queryid",
+    "GenkiMiner": "queryid",
+    "HamsterKombat": "token",
+    "Hamsterdam": "queryid",
+    "HiPinPinAI": "queryid",
+    "Interstella": "queryid",
+    "KoniStory": "queryid",
+    "MoonHub": "queryid",
+    "NEUTON": "queryid",
+    "Nomis": "queryid",
+    "PandaScratch": "queryid",
+    "PellGEM": "queryid",
+    "PinEye": "queryid",
+    "Pixie": "queryid",
+    "PocketFI": "queryid",
+    "PocketRocket": "queryid",
+    "RedPocket": "queryid",
+    "Roolz": "queryid",
+    "TonFREE": "queryid",
+    "TONxDAO": "queryid",
+    "UnitsWallet": "token",
+    "WhiteYescoin": "queryid",
+    "WonTon": "queryid",
+    "XPINPLANET": "queryid",
+    "YesCoin": "queryid",
+    "Zoo": "queryid"
 }
 
 def update_datas_txt(bot_folder, key, value):
-    """Appends a new entry to datas.txt inside a bot folder."""
+    """Updates the datas.txt file in the bot folder."""
     file_path = os.path.join(MASTER_DIR, bot_folder, 'datas.txt')
 
-    # Ensure the bot folder exists
+    # Check if bot folder exists
     if not os.path.exists(os.path.join(MASTER_DIR, bot_folder)):
-        print(f"❌ Bot folder {bot_folder} not found! Skipping...")
+        print(f"❌ Folder '{bot_folder}' not found! Skipping...")
         return
 
-    # Read the existing content (if any)
+    # Read existing content
     existing_content = ""
     if os.path.exists(file_path):
         with open(file_path, 'r') as f:
@@ -28,23 +73,23 @@ def update_datas_txt(bot_folder, key, value):
     # Prepare new content
     new_entry = f"{key}: {value}\n"
     if existing_content:
-        new_content = existing_content + "\n" + new_entry  # Append to existing content
+        new_content = existing_content + "\n" + new_entry  # Append if content exists
     else:
-        new_content = new_entry  # If empty, just add the new entry
+        new_content = new_entry  # Just add the new entry if file is empty
 
-    # Write the updated content back to the file
+    # Write the updated content back
     with open(file_path, 'w') as f:
         f.write(new_content)
 
-    print(f"✅ Updated {key} for {bot_folder} in {file_path}")
+    print(f"✅ Updated {key} for {bot_folder}")
 
 def main():
-    for bot, token_type in BOT_TOKENS.items():
-        print(f"🔍 Checking {bot}/datas.txt...")
+    for bot_folder, token_type in BOTS.items():
+        print(f"🔍 Checking {bot_folder}/datas.txt...")
 
-        value = input(f"Enter {token_type} for {bot}: ").strip()
+        value = input(f"Enter {token_type} for {bot_folder}: ").strip()
 
-        update_datas_txt(bot, token_type, value)
+        update_datas_txt(bot_folder, token_type, value)
 
 if __name__ == "__main__":
     try:
