@@ -81,13 +81,14 @@ def update_datas_txt(bot_folder, value):
     with open(file_path, 'w') as f:
         f.write(new_content)
 
-    print(f"✅ Updated {bot_folder}")
+    print(f"✅ Updated {bot_folder}/datas.txt\n")
 
 def main():
-    for bot_folder in BOTS.keys():
+    for bot_folder, token_type in BOTS.items():
         print(f"🔍 Checking {bot_folder}/datas.txt...")
 
-        value = input(f"Enter value for {bot_folder}: ").strip()
+        # Ask user for the correct value type (queryid or token)
+        value = input(f"Enter {token_type} for {bot_folder}: ").strip()
 
         update_datas_txt(bot_folder, value)
 
